@@ -1,0 +1,125 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Payments</h4>
+      <form class="form-sample" method="POST">
+          {%  csrf_token %}
+        <p class="card-description" >
+          Payment detials
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Student</label>
+                <div class="col-sm-9"> 
+                   {{form.student}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Course</label>
+                <div class="col-sm-9"> 
+                  {{form.course}}
+                </div>
+              </div>
+            </div>
+          </div>
+        
+      </br>
+          <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Pay Date</label>
+              <div class="col-sm-9">
+                {{form.pay_date}}
+              </div>
+            </div>
+          </div>
+      </br>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Type</label>
+              <div class="col-sm-9">
+                {{form.pay_type}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </br>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Note</label>
+              <div class="col-sm-9">
+                {{form.pay_note}}
+              </div>
+            </div>
+          </div>
+      </br>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Amount</label>
+              <div class="col-sm-9">
+                {{form.amount}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </br>
+      </br> 
+        <div class="d-grid gap-2 col-8 mx-auto">
+          <button type="submit" class="btn btn-primary mb-2">Add Record</button>
+      </div>   
+  </form>
+        <div class="col-md-12">
+          <div class="card card-body">
+              <h5> Payments </h5>
+          </div>
+          <div class="card card-body">    
+              <table class="table table-primary table-striped">
+                  <tr>
+                          <th> Student</th>
+                          <th> Course </th>
+                          <th> Payed Date </th>
+                          <th> Payment Type </th>
+                          <th> Note</th>
+                          <th> Amount </th>
+                          <th></th>
+                          <th></th>
+                      
+                  </tr>
+                  {% for i in payment_records %}
+                  <tr>
+        
+                      <td> {{i.student}} </td>
+                      <td> {{i.course}} </td>
+                      <td> {{i.pay_date}} </td>
+                      <td> {{i.pay_type}} </td>
+                      <td> {{i.pay_note}} </td>
+                      <td> {{i.amount}} </td>
+                      <td> <a class="btn btn-sm btn-info" href="{% url 'update_payment' i.id %}"> Update </a> </td>
+					            <td> <a class="btn btn-sm btn-danger" href="{% url 'delete_payment' i.id %}"> Delete </a> </td>
+                   
+			  
+                  </tr>
+                  {% endfor %}
+              </table>
+          </div>
+        </div>
+
+        </div>
+
+        
+    </div>
+</div>
+
+
+{% endblock  %}

@@ -1,0 +1,59 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Student's Qualifications</h4>
+        <p class="card-description">
+          Please use this Form to add Qualifications of each Student.
+        </p>
+        <form class="form-inline" method="POST">
+            {% csrf_token %}
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    <label class="sr-only" for="inlineFormInputName2">Qualification Type</label>
+                    <select class="form-control" {{form.quali_type}} </select> 
+
+                    <label class="sr-only" for="inlineFormInputName2">Qualification Details</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" {{form.quali_detail}}
+                    
+                    <hr>
+                {% endfor %}
+         
+          
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Save</button>
+        </form>
+        <div class="col-md-12">
+            <div class="card card-body">
+                <h5> Qualifications of {{student.fname}} {{student.lname}} </h5>
+            </div>
+            <div class="card card-body">    
+                <table class="table table-primary table-striped">
+                    <tr>
+                           
+                            <th> Qualification Type </th>
+                            <th> Details </th>
+
+                    </tr>
+                    {% for i in formset %}
+                    <tr>
+          
+                        <td> {{i.quali_type}} </td>
+                        <td>  {{i.quali_detail}} </td>
+            
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock  %}

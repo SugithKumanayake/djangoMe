@@ -1,0 +1,137 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+    <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Exams</h4>
+            <form class="form-sample" method="POST">
+                {%  csrf_token %}
+              <p class="card-description" >
+                All exams completed by student
+              </p>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Student</label>
+                      <div class="col-sm-9"> 
+                         {{form.student}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Course</label>
+                      <div class="col-sm-9"> 
+                        {{form.course}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+            </br>
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Exam ID</label>
+                    <div class="col-sm-9">
+                      {{form.exam_id}}
+                    </div>
+                  </div>
+                </div>
+            </br>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Module Name</label>
+                    <div class="col-sm-9">
+                      {{form.module}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Marks</label>
+                    <div class="col-sm-9">
+                      {{form.marks}}
+                    </div>
+                  </div>
+                </div>
+            </br>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Grade</label>
+                    <div class="col-sm-9">
+                      {{form.grade}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+              <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Comment</label>
+                  <div class="col-sm-9">
+                    {{form.comment}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            </br>
+            </br> 
+              <div class="d-grid gap-2 col-8 mx-auto">
+                <button type="submit" class="btn btn-primary mb-2">Add Record</button>
+            </div>   
+        </form>
+        <div class="col-md-12">
+          <div class="card card-body">
+              <h5> Exam Details </h5>
+          </div>
+          <div class="card card-body">    
+              <table class="table table-primary table-striped">
+                  <tr>
+                          <th> Student </th>
+                          <th> Course </th>
+                          <th> Exam ID </th>
+                          <th> Module Name </th>
+                          <th> Marks </th>
+                          <th> Grade </th>
+                          <th> Comment </th>
+                          <th></th>
+                          <th></th>
+                  </tr>
+                  {% for i in exam_records %}
+                  <tr>
+        
+                      <td> {{i.student}} </td>
+                      <td> {{i.course}} </td>
+                      <td> {{i.exam_id}} </td>
+                      <td> {{i.module}} </td>
+                      <td> {{i.marks}} </td>
+                      <td> {{i.grade}} </td>
+                      <td> {{i.comment}} </td>
+                      <td> <a class="btn btn-sm btn-info" href="{% url 'update_exam' i.id %}"> Update </a> </td>
+					            <td> <a class="btn btn-sm btn-danger" href="{% url 'delete_exam' i.id %}"> Delete </a> </td>
+                   
+			  
+                  </tr>
+                  {% endfor %}
+              </table>
+          </div>
+        </div>
+
+        </div>
+
+        
+    </div>
+</div>
+
+
+{% endblock  %}

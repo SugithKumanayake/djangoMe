@@ -1,0 +1,95 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+    <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Update Course Details</h4>
+            <form class="form-sample" method="POST">
+                {%  csrf_token %}
+             
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Course ID</label>
+                      <div class="col-sm-9"> 
+                        <input type="text" class="form-control" {{form.cid}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </br>
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Course Name</label>
+                    <div class="col-sm-9"> 
+                      <input type="text" class="form-control" {{form.cname}}
+                    </div>
+                  </div>
+                </div>
+            </br>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Duration(Months)</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" {{form.duration}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Conducted on</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" {{form.ctype}}
+                        
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Medium</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" {{form.medium}}
+                        
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Course Fee</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" {{form.fee}}
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      
+                        <button type="submit" class="btn btn-primary mb-2">Save</button>
+    
+                    </div>
+                  </div>
+                </div>
+        </form>
+    
+    </div>
+
+        
+</div>
+</div>
+
+
+{% endblock  %}

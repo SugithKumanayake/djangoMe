@@ -1,0 +1,21 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <p> Are you sure you want to delete this payment "{{item}}" ? </p>
+            <form action= "{% url 'delete_payment' item.id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" name="confirm">
+                <a class="btn btn-warning" href="{% url 'payment' %}"> Cancel </a>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock  %}

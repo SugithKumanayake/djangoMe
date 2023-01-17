@@ -1,0 +1,102 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+    <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Update Exam Details</h4>
+            <form class="form-sample" method="POST">
+                {%  csrf_token %}
+             
+                <p class="card-description" >
+                  Payment detials
+                </p>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Student</label>
+                        <div class="col-sm-9"> 
+                           {{form.student}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Course</label>
+                        <div class="col-sm-9"> 
+                          {{form.course}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+              </br>
+                  <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Exam ID</label>
+                      <div class="col-sm-9">
+                        {{form.exam_id}}
+                      </div>
+                    </div>
+                  </div>
+              </br>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Module Name</label>
+                      <div class="col-sm-9">
+                        {{form.module}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Marks</label>
+                      <div class="col-sm-9">
+                        {{form.marks}}
+                      </div>
+                    </div>
+                  </div>
+              </br>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Grade</label>
+                      <div class="col-sm-9">
+                        {{form.grade}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </br>
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Comment</label>
+                    <div class="col-sm-9">
+                      {{form.comment}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </br>
+              </br> 
+                <div class="d-grid gap-2 col-8 mx-auto">
+                  <button type="submit" class="btn btn-primary mb-2">Save</button>
+              </div>   
+        </form>
+    
+    </div>
+
+        
+</div>
+</div>
+
+
+{% endblock  %}
