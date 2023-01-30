@@ -1,0 +1,145 @@
+{% load static %}
+{% load compress %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+
+    <link rel="stylesheet" href="{% static 'sims_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'sims_app/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'sims_app/css/vendor.bundle.base.css' %}">
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'style.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
+    <title>Base</title>
+   
+</head>
+
+<body>
+    <div class="container-scroller">
+        {% include 'sims_app/navbar.html' %}
+        <div class="container-fluid page-body-wrapper">
+            {% include 'sims_app/sidebar.html' %}
+
+            {% block content %}
+
+   
+            {% endblock content %}
+
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center">
+                  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Developed By Sugith Kumanayake | Clavein Web 2023 </span>
+                </div>
+              </footer> 
+        </div>
+    </div>
+</body>
+    <script src="{% static 'sims_app/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'sims_app/js/off-canvas.js' %}"></script>
+    <script src="{% static 'sims_app/js/jquery.cookie.js'  %}" type="text/javascript"></script>
+    <script src="{% static 'sims_app/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'sims_app/js/template.js' %}"></script>
+    <script src="{% static 'sims_app/js/dashboard.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    
+</html>
+
+
+
+ {% comment %}  <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_img"> <img src="{% static 'sims_app/profile-img.jpg'%}"> </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div> 
+                <a href="{% url 'dashboard' %}" class="nav_logo"> 
+                    <i class='bx bx-layer nav_logo-icon'></i> 
+                    <span class="nav_logo-name">EduCom</span> 
+                </a>
+                <div class="nav_list"> 
+                    <a href="{% url 'dashboard' %}" class="nav_link active"> 
+                        <i class='bx bx-grid-alt nav_icon'></i> 
+                        <span class="nav_name">Dashboard</span> 
+                    </a> 
+                    <a href="{% url 'student' %}" class="nav_link">
+                        <i class='bx bx-user-circle nav_icon'></i> 
+                        <span class="nav_name">Students</span> 
+                    </a> 
+                     <a href="{% url 'course' %}" class="nav_link"> 
+                        <i class='bx bx-message-square-detail nav_icon'></i> 
+                        <span class="nav_name">Courses</span>
+                    </a> 
+                     
+                    <a href="{% url 'enroll' %}" class="nav_link"> 
+                        <i class='bx bx-registered nav_icon'></i>
+                         <span class="nav_name">Registration</span> 
+                    </a> 
+
+                    <a href="{% url 'payment' %}" class="nav_link"> 
+                        <i class='bx bx-money nav_icon'></i> 
+                        <span class="nav_name">Payments</span>
+                    </a>
+                             
+                    <a href="{% url 'exam' %}" class="nav_link"> 
+                        <i class='bx bx-chart nav_icon'></i> 
+                        <span class="nav_name">Exams</span> 
+                    </a> 
+                </div>
+            </div> 
+            <a href="{% url 'logout' %}" class="nav_link"> 
+                <i class='bx bx-log-out nav_icon'></i> 
+                <span class="nav_name">SignOut</span> 
+            </a>
+        </nav>
+       
+    </div>
+     {% endcomment %}
+   
+
+     
+   {% comment %}  <script type='text/javascript'>
+        document.addEventListener("DOMContentLoaded", function(event) {
+    
+            const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+            const toggle = document.getElementById(toggleId),
+            nav = document.getElementById(navId),
+            bodypd = document.getElementById(bodyId),
+            headerpd = document.getElementById(headerId)
+            
+            // Validate that all variables exist
+            if(toggle && nav && bodypd && headerpd){
+            toggle.addEventListener('click', ()=>{
+            // show navbar
+            nav.classList.toggle('show')
+            // change icon
+            toggle.classList.toggle('bx-x')
+            // add padding to body
+            bodypd.classList.toggle('body-pd')
+            // add padding to header
+            headerpd.classList.toggle('body-pd')
+            })
+            }
+            }
+            
+            showNavbar('header-toggle','nav-bar','body-pd','header')
+            
+            /*===== LINK ACTIVE =====*/
+            const linkColor = document.querySelectorAll('.nav_link')
+            
+            function colorLink()
+            {
+                if(linkColor){
+                linkColor.forEach(l=> l.classList.remove('active'))
+                this.classList.add('active')
+                }
+            }
+            
+            linkColor.forEach(l=> l.addEventListener('click', colorLink))
+            
+             // Your code to run since DOM is loaded and ready
+            });
+    </script> {% endcomment %}

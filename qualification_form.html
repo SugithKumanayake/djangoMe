@@ -1,0 +1,70 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+</br>
+</br>
+</br>
+</br>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Student's Qualifications</h4>
+            <p class="card-description">
+              Please use this Form to add Qualifications of selected Student.
+            </p>
+            <form class="form-inline" method="POST">
+              {% csrf_token %}
+                  {{ formset.management_form }}
+                  {% for form in formset %}
+                  <label class="col-sm-3 col-form-label">Qualification Type</label>
+                  <div class="col-sm-9">    
+                        {{form.quali_type}}
+                  </div>       
+                  <label class="col-sm-3 col-form-label">Qualification Details</label>
+                  <div class="col-sm-9">  
+                        {{form.quali_detail}}
+                        
+                  </div>
+                 
+                  {% endfor %}
+                  <div class="col-xl-9"> 
+                    <button type="submit" class="btn btn-primary mb-2">Save</button>
+                  </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-description">
+                  Qualifications of {{student.fname}} {{student.lname}}
+                </p> 
+              
+                <table class="table table-primary table-striped">
+                    <tr>
+                           
+                            <th> Qualification Type </th>
+                            <th> Details </th>
+
+                    </tr>
+                    {% for i in formset %}
+                    <tr>
+          
+                        <td> {{i.quali_type}} </td>
+                        <td>  {{i.quali_detail}} </td>
+            
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock  %}
