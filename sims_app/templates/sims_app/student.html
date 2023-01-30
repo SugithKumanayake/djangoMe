@@ -4,31 +4,25 @@
 
 <div class="main-panel">
   <div class="content-wrapper">
-    <div class="col-12 grid-margin">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Student Details</h4>
-            <form class="form-sample" method="POST" enctype="multipart/form-data">
+            <form class="forms-sample" method="POST" enctype="multipart/form-data">
                 {%  csrf_token %}
-              <p class="card-description" >
-                Personal information
-              </p>
               <div class="row">
                 <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Student ID</label>
-                      <div class="col-sm-9"> 
-                        <input type="text" class="form-control" {{form.sid}}
-                      </div>
+                         {{form.sid}}
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Profile Picture</label>
-                      <div class="col-sm-9">
                         {{form.profile_pic}}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -37,18 +31,14 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">First Name</label>
-                    <div class="col-sm-9"> 
                       {{form.fname}}
-                    </div>
                   </div>
                 </div>
                 </br>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Last Name</label>
-                    <div class="col-sm-9">
                       {{form.lname}}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -57,19 +47,13 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Gender</label>
-                    <div class="col-sm-9">
                       {{form.gender}}
-                        
-                     
-                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Date of Birth</label>
-                    <div class="col-sm-9">
                        {{form.bdate}}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -78,18 +62,14 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Address</label>
-                    <div class="col-sm-9">
                       {{form.address}}
-                    </div>
                   </div>
                 </div>
             </br>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Mobile No</label>
-                    <div class="col-sm-9">
                       {{form.mobile}}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -98,9 +78,7 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Other No</label>
-                    <div class="col-sm-9">
                        {{form.other_phone}}
-                    </div>
                   </div>
                 </div>
            
@@ -108,93 +86,90 @@
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
                       {{form.email}}
-                    </div>
                   </div>
                 </div>
               </div>
             </br> 
-              <div class="d-grid gap-2 col-8 mx-auto">
+              <div class="input-group-append">
                 <button type="submit" class="btn btn-primary mb-2">Add Record</button>
             </div>   
         </form>
-
-      </br>
-      <hr>
-      <div class="row">
-        <div class="card">
-          <div class="card-body">
-            <h5> Search By Student Details </h5>
-            <form class="form-sample" method="GET">
-                <label class="col-form-label">Student ID</label>
-                {{student_filter.form.sid}}
-                <label class="col-form-label">First Name</label>
-                {{student_filter.form.fname}}
-                <label class="col-form-label">Last Name</label>
-                {{student_filter.form.lname}}
-                <br>
-                <label class="col-form-label">Gender</label>
-                {{student_filter.form.gender}}
-                <label class="col-form-label">Mobile</label>
-                {{student_filter.form.mobile}}
-              <div class="d-grid gap-2 col-8 mx-auto">
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <hr>
-
-
-        <div class="col-md-12">
-          <div class="card card-body">
-              <h5> Exisitng Students  </h5>
-          </div>
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                  <tr>
-                    <th></th>
-                    <th> Student ID </th>
-                    <th> Name </th>
-                    <th> Birth Date </th>
-                    <th> Gender </th>
-                    <th> Address </th>
-                    <th> Mobile </th>
-                    <th> Other </th>
-                    <th> Email </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for i in student_records %}
-                  <tr>
-                    <td> {{i.profile_pic.url}} </td>
-                    <td> {{i.sid}} </td>
-                    <td> {{i.fname}} {{i.lname}} </td>
-                    <td> {{i.bdate}} </td>
-                    <td> {{i.gender}} </td>
-                    <td> {{i.address}} </td>
-                    <td> {{i.mobile}} </td>
-                    <td> {{i.other_phone}} </td>
-                    <td> {{i.email}} </td>
-                    <td> <a class="btn btn-sm btn-primary" href="{% url 'student_qualifications' i.sid %}"> Qualifications </a> </td>
-                    <td> <a class="btn btn-sm btn-info" href="{% url 'update_student' i.sid %}"> Update </a> </td>
-                    <td> <a class="btn btn-sm btn-danger" href="{% url 'delete_student' i.sid %}"> Delete </a> </td>
-                  
-			  
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
+
+     
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"> Advanced Search </h5>
+        <form class="form-sample" method="GET">
+          <label class="col-form-label">Student ID</label>
+          {{student_filter.form.sid}}
+          <label class="col-form-label">First Name</label>
+          {{student_filter.form.fname}}
+          <label class="col-form-label">Last Name</label>
+          {{student_filter.form.lname}}
+          <br>
+          <label class="col-form-label">Gender</label>
+          {{student_filter.form.gender}}
+          <label class="col-form-label">Mobile</label>
+          {{student_filter.form.mobile}}
+          <div class="d-grid gap-2 col-8 mx-auto">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="col-md-12">
+      <div class="card-body">
+          <h5 class="card-title"> Exisitng Students  </h5>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+              <tr>
+                <th></th>
+                <th> Student ID </th>
+                <th> Name </th>
+                <th> Birth Date </th>
+                <th> Gender </th>
+                <th> Address </th>
+                <th> Mobile </th>
+                <th> Other </th>
+                <th> Email </th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in student_records %}
+              <tr>
+                <td> <img src='{{i.profile_pic.url}}'> </td>
+                <td> {{i.sid}} </td>
+                <td> {{i.fname}} {{i.lname}} </td>
+                <td> {{i.bdate}} </td>
+                <td> {{i.gender}} </td>
+                <td> {{i.address}} </td>
+                <td> {{i.mobile}} </td>
+                <td> {{i.other_phone}} </td>
+                <td> {{i.email}} </td>
+                <td> <a class="btn btn-xs btn-primary" href="{% url 'student_qualifications' i.sid %}"> Qualifications </a> </td>
+                <td> <a class="btn btn-xs btn-info" href="{% url 'update_student' i.sid %}"> Update </a> </td>
+                <td> <a class="btn btn-xs btn-danger" href="{% url 'delete_student' i.sid %}"> Delete </a> </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+</div>
 {% endblock  %}

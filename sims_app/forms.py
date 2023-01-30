@@ -25,6 +25,16 @@ class CreateStudentForm(ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             }
 
+class CreateStudentForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+        widgets = {
+            'student': forms.Select(attrs={'class': 'form-control'}),
+            'quali_type': forms.Select(attrs={'class': 'form-control'}),
+            'quali_detail': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
 class CreateCourseForm(ModelForm):
     class Meta:
         model = Course

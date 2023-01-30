@@ -54,12 +54,21 @@ def dashboard_page(request):
     payments_total = payment_data.aggregate(Sum('amount'))['amount__sum'] 
     payments_this_month = payment_data.filter(pay_date__month = this_month).aggregate(Sum('amount'))['amount__sum'] 
 
-    chart_data = Exam.objects.all().values('marks')
-    data_list = list(chart_data.values())
-    json_data = dumps(data_list)
-    
-    context = {'json_data': json_data, 'reg_count':registrations_count, 'reg_count_month':registrations_this_month,
-    'payments_month':payments_this_month, 'payments_total':payments_total}
+    student_data = Student.objects.all()
+    student_count = student_data.count()
+    male_count = student_data.filter(gender='Male').count()
+    female_count = student_data.filter(gender='Female').count()
+
+    course_data = Course.objects.all()
+    course_count = course_data.count()
+
+    top_courses = payment_data.values('course').annotate(total = Sum('amount'))
+    top_students = payment_data.values('student').annotate(total = Sum('amount'))
+
+    context = {'student_count':  student_count, 'female_count':female_count, 'male_count':male_count, 
+    'reg_count':registrations_count, 'reg_count_month':registrations_this_month,
+    'payments_month':payments_this_month, 'payments_total':payments_total, 'course_count':course_count,
+    'top_courses':top_courses, 'top_students':top_students}
 
     return render(request,'sims_app/dashboard.html', context)
 
