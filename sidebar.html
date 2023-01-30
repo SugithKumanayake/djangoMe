@@ -1,0 +1,70 @@
+{% load static %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="ti-shield menu-icon"></i>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'student' %}">
+          <i class="ti-pencil menu-icon"></i>
+          <span class="menu-title">Students</span>
+          {% comment %} <i class="menu-arrow"></i> {% endcomment %}
+        </a>
+      {% comment %}   <div class="collapse" id="ui-basic">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+          </ul>
+        </div> {% endcomment %}
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'course' %}">
+          <i class="ti-book menu-icon"></i>
+          <span class="menu-title">Courses</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'enroll' %}">
+          <i class="ti-clipboard menu-icon"></i>
+          <span class="menu-title">Enroll</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'payment' %}">
+          <i class="ti-money menu-icon"></i>
+          <span class="menu-title">Payments</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'exam' %}">
+          <i class="ti-notepad menu-icon"></i>
+          <span class="menu-title">Exams</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+          <i class="ti-user menu-icon"></i>
+          <span class="menu-title">Users</span>
+          {% comment %} <i class="menu-arrow"></i> {% endcomment %}
+        </a>
+      {% comment %}   <div class="collapse" id="auth">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
+          </ul>
+        </div> {% endcomment %}
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">
+          <i class="ti-power-off menu-icon"></i>
+          <span class="menu-title">Sign Out</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
