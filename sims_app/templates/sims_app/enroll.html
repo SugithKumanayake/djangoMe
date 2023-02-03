@@ -1,11 +1,10 @@
 {% extends 'sims_app/base.html' %}
 {% load static %}
 {% block  content %}
-</br>
-</br>
-</br>
-</br>
-    <div class="col-12 grid-margin">
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Student Registration</h4>
@@ -19,7 +18,7 @@
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Student</label>
                       <div class="col-sm-9"> 
-                         {{form.student}}
+                        {{form.student}}
                       </div>
                     </div>
                   </div>
@@ -32,9 +31,7 @@
                     </div>
                   </div>
                 </div>
-              
-            </br>
-                <div class="row">
+              <div class="row">
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Start Date</label>
@@ -43,7 +40,6 @@
                     </div>
                   </div>
                 </div>
-            </br>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">End Date</label>
@@ -53,49 +49,45 @@
                   </div>
                 </div>
               </div>
-            </br>
-            </br> 
-              <div class="d-grid gap-2 col-8 mx-auto">
+              <div class="d-grid gap-2 col-6 mx-auto">
                 <button type="submit" class="btn btn-primary mb-2">Add Record</button>
-            </div>   
-        </form>
-        <div class="col-md-12">
-          <div class="card card-body">
-              <h5> Student enrollments </h5>
-          </div>
-          <div class="card card-body">    
-              <table class="table table-primary table-striped">
-                  <tr>
-                          <th> Student</th>
-                          <th> Course </th>
-                          <th> Start Date </th>
-                          <th> End Date </th>
-                          <th></th>
-                          <th></th>
-                      
-                  </tr>
-                  {% for i in enroll_records %}
-                  <tr>
-        
-                      <td> {{i.student}} </td>
-                      <td> {{i.course}} </td>
-                      <td> {{i.start_date}} </td>
-                      <td> {{i.end_date}} </td>
-                      <td> <a class="btn btn-sm btn-info" href="{% url 'update_enroll' i.id %}"> Update </a> </td>
-					            <td> <a class="btn btn-sm btn-danger" href="{% url 'delete_enroll' i.id %}"> Delete </a> </td>
-                   
-			  
-                  </tr>
-                  {% endfor %}
-              </table>
+              </div>   
+            </form>
           </div>
         </div>
-
-        </div>
-
+      </div>
         
+      <div class="col-md-12">
+        <div class="card">
+          <div class="col-md-12">
+            <div class="card-body">
+              <h5 class="card-title"> Enrollments </h5>
+            </div>
+            <div class="table-responsive ">   
+            <table class="table table-primary table-striped">
+                <tr>
+                        <th> Student</th>
+                        <th> Course </th>
+                        <th> Start Date </th>
+                        <th> End Date </th>
+                        <th></th>
+                        <th></th>
+                </tr>
+                {% for i in enroll_records %}
+                <tr>
+                    <td> {{i.student}} </td>
+                    <td> {{i.course}} </td>
+                    <td> {{i.start_date}} </td>
+                    <td> {{i.end_date}} </td>
+                    <td> <a class="btn btn-sm btn-info" href="{% url 'update_enroll' i.id %}"> Update </a> </td>
+                    <td> <a class="btn btn-sm btn-danger" href="{% url 'delete_enroll' i.id %}"> Delete </a> </td>
+                </tr>
+                {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>    
     </div>
+  </div>
 </div>
-
-
 {% endblock  %}

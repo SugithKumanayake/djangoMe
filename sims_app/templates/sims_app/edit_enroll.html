@@ -1,68 +1,57 @@
 {% extends 'sims_app/base.html' %}
 {% load static %}
 {% block  content %}
-</br>
-</br>
-</br>
-</br>
-    <div class="col-12 grid-margin">
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Update enrollment Details</h4>
             <form class="form-sample" method="POST">
                 {%  csrf_token %}
-             
-                <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Student</label>
-                        <div class="col-sm-9"> 
-                          <select class="form-control" {{form.student}} </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Course</label>
-                        <div class="col-sm-9"> 
-                          <select class="form-control" {{form.course}} </select>
-                        </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Student</label>
+                      <div class="col-sm-9"> 
+                         {{form.student}} 
                       </div>
                     </div>
                   </div>
-              
-              </br>
-                  <div class="row">
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Start Date</label>
-                      <div class="col-sm-9">
-                        <input class="form-control" placeholder="dd/mm/yyyy" {{form.start_date}}
-                      </div>
-                    </div>
-                  </div>
-              </br>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">End Date</label>
-                      <div class="col-sm-9">
-                        <input class="form-control" placeholder="dd/mm/yyyy" {{form.end_date}}
+                      <label class="col-sm-3 col-form-label">Course</label>
+                      <div class="col-sm-9"> 
+                        {{form.course}}
                       </div>
                     </div>
                   </div>
                 </div>
-              </br>
-              </br> 
-                <div class="d-grid gap-2 col-8 mx-auto">
-                  <button type="submit" class="btn btn-primary mb-2">Save</button>
-              </div>   
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Start Date</label>
+                    <div class="col-sm-9">
+                      {{form.start_date}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">End Date</label>
+                    <div class="col-sm-9">
+                       {{form.end_date}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>   
         </form>
-    
+      </div>       
     </div>
-
-        
+  </div>
 </div>
-</div>
-
-
 {% endblock  %}

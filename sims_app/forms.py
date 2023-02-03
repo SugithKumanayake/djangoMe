@@ -7,7 +7,11 @@ from .models import *
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'groups']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray  form-input'}),
+            'email': forms.TextInput(attrs={'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray  form-input'}),
+        }
 
 class CreateStudentForm(ModelForm):
     class Meta:
@@ -25,15 +29,6 @@ class CreateStudentForm(ModelForm):
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             }
 
-class CreateStudentForm(ModelForm):
-    class Meta:
-        model = Student
-        fields = '__all__'
-        widgets = {
-            'student': forms.Select(attrs={'class': 'form-control'}),
-            'quali_type': forms.Select(attrs={'class': 'form-control'}),
-            'quali_detail': forms.TextInput(attrs={'class': 'form-control'}),
-        }
 
 class CreateCourseForm(ModelForm):
     class Meta:
@@ -42,7 +37,7 @@ class CreateCourseForm(ModelForm):
         widgets = {
             'cid': forms.TextInput(attrs={'class': 'form-control'}),
             'cname': forms.TextInput(attrs={'class': 'form-control'}),
-            'duration': forms.NumberInput(attrs={'class': 'form-control'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control','placeholder': 'Months'}),
             'ctype': forms.Select(attrs={'class': 'form-control'}),
             'fee': forms.NumberInput(attrs={'class': 'form-control'}),
             'medium': forms.Select(attrs={'class': 'form-control'}),

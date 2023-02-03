@@ -5,14 +5,16 @@ from django.db.models import Sum
 from .forms import *
 from .models import *
 from .filters import StudentFilter
-from .decoraters import unathenticated_user
+from .decoraters import unathenticated_user, allowed_users
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from json import dumps
 
 # Create your views here.
-@unathenticated_user
+
+
 def register_page(request):
         form = CreateUserForm()
     
@@ -44,6 +46,8 @@ def logout_page(request):
     logout(request)
     return redirect('login')
 
+
+@login_required(login_url='login')
 def dashboard_page(request):
     enroll_data = Enroll.objects.all()
     registrations_count = enroll_data.count()
@@ -72,6 +76,7 @@ def dashboard_page(request):
 
     return render(request,'sims_app/dashboard.html', context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def create_student_page(request):
     student_records = Student.objects.all()
 
@@ -80,7 +85,7 @@ def create_student_page(request):
 
     form = CreateStudentForm()
     if request.method == "POST":
-        form = CreateStudentForm(request.POST)
+        form = CreateStudentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Record is added Successfully!')
@@ -89,18 +94,20 @@ def create_student_page(request):
     context = {'form':form, 'student_records':student_records, 'student_filter':student_filter}
     return render(request,'sims_app/student.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def edit_student_page(request, pk):
     student_instance = Student.objects.get(sid=pk)
     
     form = CreateStudentForm(instance=student_instance) 
     if request.method == "POST":
-        form = CreateStudentForm(request.POST, instance=student_instance)
+        form = CreateStudentForm(request.POST, request.FILES, instance=student_instance)
         if form.is_valid():
             form.save()
             return redirect('student')
     context = {'form':form}
     return render(request,'sims_app/edit_student.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def delete_student_page(request, pk):
     student_instance = Student.objects.get(sid=pk)
     if request.method == "POST":
@@ -109,6 +116,7 @@ def delete_student_page(request, pk):
     context = {'item':student_instance}
     return render(request,'sims_app/delete_student.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def qualifications_page(request, pk):
     QualificationFormSet = inlineformset_factory(Student, St_Qualification, fields=('quali_type','quali_detail'), extra=4)
     student_instance = Student.objects.get(sid=pk)
@@ -122,6 +130,7 @@ def qualifications_page(request, pk):
     context = {'formset':formset, 'student':student_instance}
     return render(request,'sims_app/qualification_form.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def create_course_page(request):
     course_records = Course.objects.all()
     form = CreateCourseForm()
@@ -135,6 +144,7 @@ def create_course_page(request):
     context = {'form':form, 'course_records':course_records}
     return render(request,'sims_app/course.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def edit_course_page(request, pk):
     course_records = Course.objects.get(cid=pk)
     
@@ -147,6 +157,7 @@ def edit_course_page(request, pk):
     context = {'form':form}
     return render(request,'sims_app/edit_course.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def delete_course_page(request, pk):
     course_instance = Course.objects.get(cid=pk)
     if request.method == "POST":
@@ -155,6 +166,7 @@ def delete_course_page(request, pk):
     context = {'item':course_instance}
     return render(request,'sims_app/delete_course.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def create_enroll_page(request):
     enroll_records = Enroll.objects.all()
     form = CreateEnrollForm()
@@ -168,6 +180,7 @@ def create_enroll_page(request):
     context = {'form':form, 'enroll_records':enroll_records}
     return render(request,'sims_app/enroll.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def edit_enroll_page(request, pk):
    enroll_records = Enroll.objects.get(id=pk)
    form = CreateEnrollForm(instance=enroll_records)
@@ -179,6 +192,7 @@ def edit_enroll_page(request, pk):
    context = {'form':form, 'enroll_records':enroll_records}
    return render(request,'sims_app/edit_enroll.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def delete_enroll_page(request, pk):
     enroll_records = Enroll.objects.get(id=pk)
     if request.method == "POST":
@@ -187,6 +201,7 @@ def delete_enroll_page(request, pk):
     context = {'item':enroll_records}
     return render(request,'sims_app/delete_enroll.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def create_payment_page(request):
     payment_records = Payment.objects.all()
     form = CreatePaymentForm()
@@ -200,6 +215,7 @@ def create_payment_page(request):
     context = {'form':form, 'payment_records':payment_records}
     return render(request,'sims_app/payment.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def edit_payment_page(request, pk):
    payment_records = Payment.objects.get(id=pk)
    form = CreatePaymentForm(instance=payment_records)
@@ -211,6 +227,7 @@ def edit_payment_page(request, pk):
    context = {'form':form, 'payment_records':payment_records}
    return render(request,'sims_app/edit_payment.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def delete_payment_page(request, pk):
     payment_records = Payment.objects.get(id=pk)
     if request.method == "POST":
@@ -219,6 +236,7 @@ def delete_payment_page(request, pk):
     context = {'item':payment_records}
     return render(request,'sims_app/delete_payment.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def create_exam_page(request):
     exam_records = Exam.objects.all()
     form = CreateExamForm()
@@ -232,6 +250,7 @@ def create_exam_page(request):
     context = {'form':form, 'exam_records':exam_records}
     return render(request,'sims_app/exam.html',context)
 
+@allowed_users(allowed_roles=['admin','user'])
 def edit_exam_page(request, pk):
    exam_records = Exam.objects.get(id=pk)
    form = CreateExamForm(instance=exam_records)
@@ -243,6 +262,7 @@ def edit_exam_page(request, pk):
    context = {'form':form, 'exam_records':exam_records}
    return render(request,'sims_app/edit_exam.html',context)
 
+@allowed_users(allowed_roles=['admin'])
 def delete_exam_page(request, pk):
     exam_records = Exam.objects.get(id=pk)
     if request.method == "POST":

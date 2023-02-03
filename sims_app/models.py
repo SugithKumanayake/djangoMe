@@ -12,7 +12,7 @@ class Student(models.Model):
     other_phone = models.CharField(max_length=10, null=True, blank=True)
     email = models.CharField(max_length=50, null=True)
     address = models.CharField(max_length=100, null=True)
-    profile_pic = models.ImageField(null=True, blank=True, default='profile1.png')
+    profile_pic = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.fname + " " + self.lname
