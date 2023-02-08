@@ -19,7 +19,7 @@ class Student(models.Model):
 
 class St_Qualification(models.Model):
     quali_lookup = (('A/L','A/L'),('O/L','O/L'),('HND','HND'),('BSc','BSc'),('MSc','MSc'),('MBA','MBA'),('PHD','PHD'))
-    student = models.ForeignKey(Student, null=True, on_delete= models.SET_NULL)
+    student = models.ForeignKey(Student, null=True, on_delete= models.CASCADE)
     quali_type = models.CharField(max_length=10, null=True, choices=quali_lookup)
     quali_detail = models.CharField(max_length=100, null=True)
 
@@ -37,23 +37,23 @@ class Course(models.Model):
         return self.cname
 
 class Enroll(models.Model):
-    student = models.ForeignKey(Student, null=True, on_delete= models.SET_NULL)
-    course = models.ForeignKey(Course, null=True, on_delete= models.SET_NULL)
+    student = models.ForeignKey(Student, null=True, on_delete= models.CASCADE)
+    course = models.ForeignKey(Course, null=True, on_delete= models.CASCADE)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
 
 class Payment(models.Model):
     paytype_lookup = (('Downpay','Downpay'),('RegFee','RegFee'),('Installements','Installements'),('CertificateFee','CertificateFee'),('Other','Other'))
-    student = models.ForeignKey(Student, null=True, on_delete= models.SET_NULL)
-    course = models.ForeignKey(Course, null=True, on_delete= models.SET_NULL)
+    student = models.ForeignKey(Student, null=True, on_delete= models.CASCADE)
+    course = models.ForeignKey(Course, null=True, on_delete= models.CASCADE)
     pay_date = models.DateField(null=True)
     pay_type = models.CharField(max_length=30, null=True, choices=paytype_lookup)
     pay_note = models.CharField(max_length=80, null=True)
     amount = models.IntegerField(null=True)
 
 class Exam(models.Model):
-    student = models.ForeignKey(Student, null=True, on_delete= models.SET_NULL)
-    course = models.ForeignKey(Course, null=True, on_delete= models.SET_NULL)
+    student = models.ForeignKey(Student, null=True, on_delete= models.CASCADE)
+    course = models.ForeignKey(Course, null=True, on_delete= models.CASCADE)
     exam_id = models.CharField(max_length=10, null=True, unique=True)
     module = models.CharField(max_length=25, null=True)
     marks = models.IntegerField(null=True)

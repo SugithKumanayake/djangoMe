@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.db.models import Q
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from .forms import *
 from .models import *
 from .filters import StudentFilter
@@ -22,8 +22,6 @@ def register_page(request):
             form = CreateUserForm(request.POST)
             if form.is_valid():
                 form.save()
-                user = form.cleaned_data.get('username')
-                messages.success(request, 'Account was created for User : ' + user)
                 return redirect('login')
         context = {'form':form}
         return render(request,'sims_app/register.html',context)
@@ -66,13 +64,19 @@ def dashboard_page(request):
     course_data = Course.objects.all()
     course_count = course_data.count()
 
-    top_courses = payment_data.values('course').annotate(total = Sum('amount'))
-    top_students = payment_data.values('student').annotate(total = Sum('amount'))
+    top_courses = payment_data.values('course__cname').annotate(total = Sum('amount')).order_by('-total')[:5]
+    top_students = payment_data.values('student__fname','student__lname').annotate(total = Sum('amount')).order_by('-total')[:5]
+
+    exam_data = Exam.objects.all()
+    students_performance = exam_data.values('student__profile_pic','student__fname','student__lname').annotate(total = Sum('marks')).order_by('-total').annotate(exam_count =Count('exam_id'))
+    best_performer = students_performance[0] 
 
     context = {'student_count':  student_count, 'female_count':female_count, 'male_count':male_count, 
     'reg_count':registrations_count, 'reg_count_month':registrations_this_month,
     'payments_month':payments_this_month, 'payments_total':payments_total, 'course_count':course_count,
-    'top_courses':top_courses, 'top_students':top_students}
+    'top_courses':top_courses, 'top_students':top_students, 'students_performance':students_performance,
+    'best_performer':best_performer,
+    }
 
     return render(request,'sims_app/dashboard.html', context)
 
@@ -88,7 +92,6 @@ def create_student_page(request):
         form = CreateStudentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('student')
             
     context = {'form':form, 'student_records':student_records, 'student_filter':student_filter}
@@ -125,7 +128,6 @@ def qualifications_page(request, pk):
         formset = QualificationFormSet(request.POST,instance=student_instance)
         if formset.is_valid():
             formset.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('student')
     context = {'formset':formset, 'student':student_instance}
     return render(request,'sims_app/qualification_form.html',context)
@@ -138,7 +140,6 @@ def create_course_page(request):
         form = CreateCourseForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('course')
             
     context = {'form':form, 'course_records':course_records}
@@ -174,7 +175,6 @@ def create_enroll_page(request):
         form = CreateEnrollForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('enroll')
             
     context = {'form':form, 'enroll_records':enroll_records}
@@ -209,7 +209,6 @@ def create_payment_page(request):
         form = CreatePaymentForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('payment')
             
     context = {'form':form, 'payment_records':payment_records}
@@ -227,7 +226,7 @@ def edit_payment_page(request, pk):
    context = {'form':form, 'payment_records':payment_records}
    return render(request,'sims_app/edit_payment.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+@allowed_users(allowed_roles=['admin'])
 def delete_payment_page(request, pk):
     payment_records = Payment.objects.get(id=pk)
     if request.method == "POST":
@@ -244,7 +243,6 @@ def create_exam_page(request):
         form = CreateExamForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Record is added Successfully!')
             return redirect('exam')
             
     context = {'form':form, 'exam_records':exam_records}
@@ -271,3 +269,8 @@ def delete_exam_page(request, pk):
     context = {'item':exam_records}
     return render(request,'sims_app/delete_exam.html',context)
 
+@allowed_users(allowed_roles=['admin'])
+def user_dashboard_page(request):
+    users_data = User.objects.all()
+    context = {'users_data':users_data,}
+    return render(request,'sims_app/users.html',context)

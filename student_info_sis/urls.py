@@ -41,6 +41,7 @@ urlpatterns = [
     path('exam/', create_exam_page, name='exam'),
     path('update_exam/<str:pk>/', edit_exam_page, name='update_exam'),
     path('delete_exam/<str:pk>/', delete_exam_page, name='delete_exam'),
+    path('users/', user_dashboard_page, name='users'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

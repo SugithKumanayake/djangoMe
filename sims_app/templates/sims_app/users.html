@@ -1,0 +1,51 @@
+{% extends 'sims_app/base.html' %}
+{% load static %}
+{% block  content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Exams</h4>
+            <form class="form-sample" method="POST">
+                {%  csrf_token %}
+              <p class="card-description" >
+                Register a user account
+              </p>
+            
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <a class="btn btn-primary mb-2" href="{% url 'register' %}">Create User</a>
+            </div>   
+        </form>
+      </div>
+    </div>
+  </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="col-md-12">
+            <div class="card-body">
+              <h5 class="card-title"> Exisiting User Accounts </h5>
+            </div>
+            <div class="table-responsive "> 
+              <table class="table table-primary table-striped">
+                  <tr>
+                          <th> Username </th>
+                          <th> Email </th>
+                         
+                  </tr>
+                  {% for i in users_data %}
+                  <tr>
+        
+                      <td> {{i.username}} </td>
+                      <td> {{i.email}} </td>
+                  </tr>
+                  {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock  %}

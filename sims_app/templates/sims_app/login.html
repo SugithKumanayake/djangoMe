@@ -53,6 +53,13 @@
                   class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
                   href="{% url 'register' %}">Don't you have an account?  <u> Register </u></a>
               </p>
+              <h4 class="mt-4 text-red-600">
+                {% for message in messages %}
+                  <div class="message {{ message.tags }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </h3>
             </div>
           </div>
         </div>
