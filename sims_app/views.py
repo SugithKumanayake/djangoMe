@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
 from django.db.models import Sum, Count
@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.forms import inlineformset_factory
-from json import dumps
+
 
 # Create your views here.
 
@@ -19,7 +19,7 @@ def register_page(request):
         form = CreateUserForm()
     
         if request.method == "POST":
-            form = CreateUserForm(request.POST)
+            form = CreateUserForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
                 return redirect('login')
@@ -80,7 +80,7 @@ def dashboard_page(request):
 
     return render(request,'sims_app/dashboard.html', context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def create_student_page(request):
     student_records = Student.objects.all()
 
@@ -97,7 +97,7 @@ def create_student_page(request):
     context = {'form':form, 'student_records':student_records, 'student_filter':student_filter}
     return render(request,'sims_app/student.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def edit_student_page(request, pk):
     student_instance = Student.objects.get(sid=pk)
     
@@ -110,7 +110,7 @@ def edit_student_page(request, pk):
     context = {'form':form}
     return render(request,'sims_app/edit_student.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+@allowed_users(allowed_roles=['admin'])
 def delete_student_page(request, pk):
     student_instance = Student.objects.get(sid=pk)
     if request.method == "POST":
@@ -119,9 +119,8 @@ def delete_student_page(request, pk):
     context = {'item':student_instance}
     return render(request,'sims_app/delete_student.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
 def qualifications_page(request, pk):
-    QualificationFormSet = inlineformset_factory(Student, St_Qualification, fields=('quali_type','quali_detail'), extra=4)
+    QualificationFormSet = inlineformset_factory(Student, St_Qualification, fields=('quali_type','quali_detail'), extra=1)
     student_instance = Student.objects.get(sid=pk)
     formset = QualificationFormSet(instance=student_instance)
     if request.method == "POST":
@@ -132,7 +131,43 @@ def qualifications_page(request, pk):
     context = {'formset':formset, 'student':student_instance}
     return render(request,'sims_app/qualification_form.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
+def delete_qualifications_page(request, pk):
+    QualificationFormSet = inlineformset_factory(Student, St_Qualification, fields=('quali_type','quali_detail'), extra=1, can_delete=True)
+    student_instance = Student.objects.get(sid=pk)
+    formset = QualificationFormSet(instance=student_instance)
+    if request.method == "POST":
+      if "delete-qualifications" in request.POST:
+        
+            if formset.is_valid():
+                for form in formset:
+                    if form.cleaned_data.get("DELETE"):
+                        qualification = form.instance
+                        qualification.delete()
+                        return redirect("student_qualifications")
+    context = {'formset':formset }
+    return render(request,'sims_app/delete_qualification.html',context)
+
+""" def qualifications_page(request, pk):
+    QualificationFormSet = inlineformset_factory(Student, St_Qualification, fields=('quali_type','quali_detail'), extra=1, can_delete=True)
+    student_instance = Student.objects.get(sid=pk)
+    formset = QualificationFormSet(instance=student_instance)
+    if request.method == "POST":
+        formset = QualificationFormSet(request.POST,instance=student_instance)
+        if "confirm" in request.POST:
+            if formset.is_valid():
+                for form in formset:
+                    if form.cleaned_data.get("DELETE"):
+                        qualification = form.instance
+                        qualification.delete()
+                return redirect("student_qualifications")
+        elif formset.is_valid():
+            formset.save()
+            return redirect('student')
+    context = {'formset':formset, 'student':student_instance}
+    return render(request,'sims_app/qualification_form.html',context) """
+
+
 def create_course_page(request):
     course_records = Course.objects.all()
     form = CreateCourseForm()
@@ -145,7 +180,7 @@ def create_course_page(request):
     context = {'form':form, 'course_records':course_records}
     return render(request,'sims_app/course.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def edit_course_page(request, pk):
     course_records = Course.objects.get(cid=pk)
     
@@ -158,7 +193,7 @@ def edit_course_page(request, pk):
     context = {'form':form}
     return render(request,'sims_app/edit_course.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+@allowed_users(allowed_roles=['admin'])
 def delete_course_page(request, pk):
     course_instance = Course.objects.get(cid=pk)
     if request.method == "POST":
@@ -167,7 +202,7 @@ def delete_course_page(request, pk):
     context = {'item':course_instance}
     return render(request,'sims_app/delete_course.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def create_enroll_page(request):
     enroll_records = Enroll.objects.all()
     form = CreateEnrollForm()
@@ -180,7 +215,7 @@ def create_enroll_page(request):
     context = {'form':form, 'enroll_records':enroll_records}
     return render(request,'sims_app/enroll.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def edit_enroll_page(request, pk):
    enroll_records = Enroll.objects.get(id=pk)
    form = CreateEnrollForm(instance=enroll_records)
@@ -192,7 +227,7 @@ def edit_enroll_page(request, pk):
    context = {'form':form, 'enroll_records':enroll_records}
    return render(request,'sims_app/edit_enroll.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+@allowed_users(allowed_roles=['admin'])
 def delete_enroll_page(request, pk):
     enroll_records = Enroll.objects.get(id=pk)
     if request.method == "POST":
@@ -201,7 +236,7 @@ def delete_enroll_page(request, pk):
     context = {'item':enroll_records}
     return render(request,'sims_app/delete_enroll.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def create_payment_page(request):
     payment_records = Payment.objects.all()
     form = CreatePaymentForm()
@@ -214,7 +249,7 @@ def create_payment_page(request):
     context = {'form':form, 'payment_records':payment_records}
     return render(request,'sims_app/payment.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def edit_payment_page(request, pk):
    payment_records = Payment.objects.get(id=pk)
    form = CreatePaymentForm(instance=payment_records)
@@ -235,7 +270,7 @@ def delete_payment_page(request, pk):
     context = {'item':payment_records}
     return render(request,'sims_app/delete_payment.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def create_exam_page(request):
     exam_records = Exam.objects.all()
     form = CreateExamForm()
@@ -248,7 +283,7 @@ def create_exam_page(request):
     context = {'form':form, 'exam_records':exam_records}
     return render(request,'sims_app/exam.html',context)
 
-@allowed_users(allowed_roles=['admin','user'])
+
 def edit_exam_page(request, pk):
    exam_records = Exam.objects.get(id=pk)
    form = CreateExamForm(instance=exam_records)
@@ -271,6 +306,13 @@ def delete_exam_page(request, pk):
 
 @allowed_users(allowed_roles=['admin'])
 def user_dashboard_page(request):
-    users_data = User.objects.all()
-    context = {'users_data':users_data,}
+    users_data = Profile.objects.all().values('profile_pic','user__username','user__email')
+   
+    form = CreateUserForm()
+    if request.method == "POST":
+            form = CreateUserForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('users')
+    context = {'form':form,'users_data':users_data}
     return render(request,'sims_app/users.html',context)

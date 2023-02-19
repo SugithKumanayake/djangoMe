@@ -61,9 +61,9 @@
                       {% for i in formset %}
                       <tr>
             
-                          <td> {{i.quali_type}} </td>
-                          <td>  {{i.quali_detail}} </td>
-              
+                          <td> {{i.instance.quali_type}} </td>
+                          <td>  {{i.instance.quali_detail}} </td>
+                          
                       </tr>
                       {% endfor %}
                     </tbody>

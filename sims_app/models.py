@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Student(models.Model):
@@ -60,3 +61,9 @@ class Exam(models.Model):
     grade = models.CharField(max_length=1, null=True)
     comment = models.CharField(max_length=80, null=True) 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    profile_pic = models.ImageField(null=True, blank=True, default='profile1.png')
+
+    def __str__(self):
+        return self.user.username

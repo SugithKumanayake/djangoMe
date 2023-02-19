@@ -5,12 +5,22 @@ from django import forms
 from .models import *
 
 class CreateUserForm(UserCreationForm):
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg', 'type':'password','placeholder':'Password'}),
+    )
+    password2 = forms.CharField(
+        label="Confirm password",
+        widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg', 'type':'password','placeholder':'Confirm Password'}),
+    )
+    
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'groups']
+        fields = ['username', 'email']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray  form-input'}),
-            'email': forms.TextInput(attrs={'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray  form-input'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder':'Username'}),
+            'email': forms.TextInput(attrs={'class': 'form-control form-control-lg',  'placeholder':'Email'}),
+
         }
 
 class CreateStudentForm(ModelForm):
